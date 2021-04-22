@@ -67,7 +67,7 @@ tab1Comp <-  fluidPage(tabsetPanel(
         htmlOutput("uiHalfLife1Comp"),
         numericInput(
           "initial_concentration1Comp",
-          "Initial concentration of drug (mg/L)",
+          "Peak concentration after 1st dose (mg/L)",
           2
           ,
           min = 0,

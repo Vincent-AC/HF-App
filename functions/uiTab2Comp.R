@@ -66,7 +66,7 @@ tab2Comp <-
       htmlOutput("uiHalfLifeA2Comp"),
       numericInput(
         "initial_concentration_A",
-        "Initial concentration of drug A (mg/L)",
+        "Peak concentration after 1st dose of drug A (mg/L)",
         2,
         min = 0,
         step = 0.01
@@ -75,7 +75,7 @@ tab2Comp <-
       htmlOutput("uiHalfLifeB2Comp"),
       numericInput(
         "initial_concentration_B",
-        "Initial concentration of drug B (mg/L)",
+        "Peak concentration after 1st dose of drug B (mg/L)",
         0.8,
         min = 0,
         step = 0.01
