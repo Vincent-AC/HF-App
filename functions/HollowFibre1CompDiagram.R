@@ -42,20 +42,18 @@ HollowFibre1CompDiagram <- function(Parameters,
         y = 1230,
         label = paste0(filter(Parameters, ID == "Vcentral") %>% select(Value) %>% as.numeric() %>% round(0), " mL")
       ), color = "#0ed145") + # volume central
-      geom_text(size=4,mapping=aes(
-        x = 1510,
-        y = 1100,
-        label = paste0(
-          filter(Parameters, ID == "volume_diluant_to_central") %>% select(Value) %>% as.numeric() %>% round(0),
-          " mL"
-        )
-      ), color = "#0ed145") + # volume diluent
-            geom_text(size=4,mapping=aes(
-                    x = 1275,
-                    y = 375,
-                    label = "50 to 120 mL/min"
-
-            ), color = "#ff7f27") + # flow cartridge pump
+      geom_text(
+        size = 4,
+        mapping = aes(
+          x = 1275,
+          y = 375,
+          label = paste0(
+            filter(Parameters, ID == "debit_central_cartridge") %>% select(Value),
+            " mL/min"
+          )
+        ),
+        color = "#ff7f27"
+      ) +
       geom_text(size=4,mapping=aes(
         x = 1275,
         y = 575,
@@ -161,12 +159,18 @@ HollowFibre1CompDiagram <- function(Parameters,
           " mL"
         )
       ), color = "#0ed145") + # volume diluent
-            geom_text(size=4,mapping=aes(
-                    x = 1275,
-                    y = 375,
-                    label = "50 to 120 mL/min"
-
-            ), color = "#ff7f27") + # flow cartridge pump
+      geom_text(
+        size = 4,
+        mapping = aes(
+          x = 1275,
+          y = 375,
+          label = paste0(
+            filter(Parameters, ID == "debit_central_cartridge") %>% select(Value),
+            " mL/min"
+          )
+        ),
+        color = "#ff7f27"
+      ) + # flow cartridge pump
       geom_text(size=4,mapping=aes(
         x = 1275,
         y = 575,

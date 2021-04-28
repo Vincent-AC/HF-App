@@ -156,6 +156,8 @@ shinyServer(function(input, output, session) {
         numberOfDosesInf = input$numberOfDosesInf1Comp,
         adm.type = input$admtype1Comp,
         constantVolume = input$constantVolume1Comp,
+        debit_central_cartridge = input$debit_central_cartridge1Comp,
+        constantVolume = input$constantVolume1Comp,
         Css = input$css1comp
       )
     )

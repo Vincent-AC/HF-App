@@ -14,6 +14,7 @@ HollowFibre1CompSimData  <- function(model,
                                   numberOfDosesInf = NA,
                                   adm.type,
                                   constantVolume = T,
+                                  debit_central_cartridge)
                                   Css = NA)
 {
   library(mrgsolve)
@@ -29,7 +30,9 @@ HollowFibre1CompSimData  <- function(model,
 
   parameterValues <-
     c(Q1 = debit_pompe_central_waste ,
-      V1 = (Vcentral + Vcartridge))
+      Q2 = debit_central_cartridge ,
+      V1 = Vcentral,
+      V2 = Vcartridge)
 
 
 
@@ -53,7 +56,7 @@ HollowFibre1CompSimData  <- function(model,
       Vadd_bolus <-
         ev(
           amt = VinjectBolus,
-          cmt = 2,
+          cmt = 3,
           ii = dosingIntervalMinBolus,
           addl = numberOfDosesBolus-1
         )
@@ -97,7 +100,7 @@ HollowFibre1CompSimData  <- function(model,
         ev(
           amt = VinjectInf,
           rate = VinjectInf / tinfuseMin,
-          cmt = 2,
+          cmt = 3,
           ii = dosingIntervalMinInf,
           addl = numberOfDosesInf-1
         )

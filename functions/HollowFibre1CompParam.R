@@ -11,7 +11,8 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                   VinjectInf =  10,
                                   dosingIntervalHoursInf = 12,
                                   numberOfDosesInf = 2,
-                                  adm.type="Bolus")
+                                  adm.type="Bolus",
+                                  debit_central_cartridge=120)
 {
   library(plyr)
   library(dplyr)
@@ -45,7 +46,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                   Group = c(rep("Drug",4),
                             rep("Volume",4),
                             rep("Bolus",4),
-                            rep("Experiment",3)),
+                            rep("Experiment",4)),
                         Parameter = c(
                                 "Drug name",
                                 "Cmax central after 1 dose (µg/mL)",
@@ -61,7 +62,8 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "Total injected volume (mL)",
                                 "Duration of experiment (h)",
                                 "Flow pump diluant to central (mL/min)",
-                                "Flow pump central to waste (mL/min)"
+                                "Flow pump central to waste (mL/min)",
+                                "Flow pump central to cartridge (mL/min)"
                         ),
                         Value = c(drugName,
                                   round(
@@ -79,7 +81,8 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                                   total_injected_volume,
                                                   lastTimePointHours,
                                                   debit_pompe_dil_central,
-                                                  debit_pompe_central_waste
+                                                  debit_pompe_central_waste,
+                                                  debit_central_cartridge
                                           ),
                                           3
                                   )),
@@ -98,7 +101,8 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "total_injected_volume",
                                 "lastTimePointHours",
                                 "debit_pompe_dil_central",
-                                "debit_pompe_central_waste"
+                                "debit_pompe_central_waste",
+                                "debit_central_cartridge"
                         )
                 )
 
@@ -122,7 +126,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                         Group = c(rep("Drug",4),
                                   rep("Volume",4),
                                   rep("Infusion",4),
-                                  rep("Experiment",4)),
+                                  rep("Experiment",5)),
                         Parameter = c(
                                 "Drug Name",
                                 "Cmax central after 1 dose (µg/mL)",
@@ -139,6 +143,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "Duration of experiment (h)",
                                 "Flow pump diluant to central (mL/min)",
                                 "Flow pump central to waste (mL/min)",
+                                "Flow pump central to cartridge (mL/min)",
                                 "Flow infusion pump (mL/min)"
                         ),
                         Value = c(drugName,
@@ -158,6 +163,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                                   lastTimePointHours,
                                                   debit_pompe_dil_central,
                                                   debit_pompe_central_waste,
+                                                  debit_central_cartridge,
                                                   debit_infuse
                                           ),
                                           3
@@ -178,6 +184,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "lastTimePointHours",
                                 "debit_pompe_dil_central",
                                 "debit_pompe_central_waste",
+                                "debit_central_cartridge",
                                 "debit_infuse"
                         )
                 )
