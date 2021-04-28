@@ -90,7 +90,7 @@ tab1Comp <-  fluidPage(tabsetPanel(
         radioButtons(
           "admtype1Comp",
           "Type of injection",
-          choices = c("Bolus", "Infusion"),
+          choices = c("Bolus", "Infusion","Loading dose + Infusion"),
           selected = "Bolus"
         ),
         conditionalPanel(
@@ -123,6 +123,45 @@ tab1Comp <-  fluidPage(tabsetPanel(
 
           numericInput(
             "tinfuseHours1Comp",
+            "Infusion duration (hours)",
+            1,
+            min = 0,
+            step = 0.01
+          ),
+          numericInput(
+            "VinjectInf1Comp",
+            "Infusion volume (mL)",
+            10,
+            min = 0,
+            step = 0.01
+          ),
+          numericInput(
+            "dosingIntervalHoursInf1Comp",
+            "Dosing interval (hours)",
+            12,
+            min = 0,
+            step = 0.01
+          ),
+          numericInput(
+            "numberOfDosesInf1Comp",
+            "Total number of doses",
+            2,
+            min = 1,
+            step = 1
+          )
+        ),
+        conditionalPanel(
+          condition = "input.admtype1Comp== 'Loading dose + Infusion'",
+
+          numericInput(
+            "tinfuseHours1Comp",
+            "Infusion duration (hours)",
+            1,
+            min = 0,
+            step = 0.01
+          ),
+          numericInput(
+            "css1comp",
             "Infusion duration (hours)",
             1,
             min = 0,

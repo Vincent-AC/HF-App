@@ -13,14 +13,14 @@ HollowFibre1CompSimData  <- function(model,
                                   dosingIntervalHoursInf = NA,
                                   numberOfDosesInf = NA,
                                   adm.type,
-                                  constantVolume = T)
+                                  constantVolume = T,
+                                  Css = NA)
 {
   library(mrgsolve)
   library(dplyr)
   library(ggplot2)
   halfLifeMin <-   halfLifeHours * 60
   lastTimePointMin <- lastTimePointHours * 60
-
 
   clearance <-
     log(2) * (Vcentral + Vcartridge) / halfLifeMin #ml/min
@@ -103,6 +103,53 @@ HollowFibre1CompSimData  <- function(model,
         )
       dose <- e1_infusion + Vadd_infusion
       dose <- realize_addl(dose)
+    }
+
+
+    simulated_data <- model %>%
+      ev(dose) %>%
+      param(parameterValues) %>%
+      mrgsim(end = lastTimePointMin) %>%
+      as_tibble
+
+  }
+
+  if (adm.type == "Loading dose + Infusion")
+  {
+    tinfuseMin <- tinfuseHours * 60
+    halfLifeMin <-   halfLifeHours * 60
+    dosingIntervalMinInf <- dosingIntervalHoursInf * 60
+    keHours <- log(2) / halfLifeHours
+    keMin <- log(2) / halfLifeMin
+    # IV Loading dose
+    dose_loading <- Css * (Vcentral + Vcartridge)
+    # IV infusion
+    rate_infuse <- keMin * Css * (Vcentral + Vcartridge)
+
+    #Dose events for each compartments
+    e1_loading <- ev(      amt = dose_loading,
+      cmt = 1,
+      ii = NA,
+      addl = NA    )
+    e1_infusion <-
+      ev(
+        amt = rate_infuse*lastTimePointMin,
+        rate = rate_infuse,
+        cmt = 1
+      )
+    dose <- e1_loading + e1_infusion
+    if (constantVolume == FALSE)
+    {
+      Vadd_infusion <-
+        ev(
+          amt = VinjectInf,
+          rate = VinjectInf / tinfuseMin,
+          cmt = 2,
+          ii = dosingIntervalMinInf,
+          addl = numberOfDosesInf-1
+        ) %>% realize_addl()
+      dose <- e1_loading + e1_infusion + Vadd_infusion
+
     }
 
 

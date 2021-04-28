@@ -13,7 +13,8 @@ HF1Comp <- function(model,
                     dosingIntervalHoursInf = NA,
                     numberOfDosesInf = NA,
                     adm.type,
-                    constantVolume = T)
+                    constantVolume = T,
+                    Css = NA)
 {
   Parameters <- HollowFibre1CompParam(
     halfLifeHours,
@@ -48,7 +49,8 @@ HF1Comp <- function(model,
     dosingIntervalHoursInf,
     numberOfDosesInf,
     adm.type,
-    constantVolume
+    constantVolume,
+    Css
   )
 
   Plot <- HollowFibre1CompPlot(
