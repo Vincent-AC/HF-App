@@ -47,6 +47,13 @@ tab1Comp <-  fluidPage(tabsetPanel(
           step = 0.01
         ),
         numericInput(
+          "debit_central_cartridge1Comp",
+          "Flow rate central to cartridge (mL/min)",
+          120,
+          min = 0,
+          step = 0.01
+        ),
+        numericInput(
           "Vcartridge1Comp",
           "Cartridge volume (mL)",
           50,

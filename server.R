@@ -155,7 +155,8 @@ shinyServer(function(input, output, session) {
         dosingIntervalHoursInf =  input$dosingIntervalHoursInf1Comp,
         numberOfDosesInf = input$numberOfDosesInf1Comp,
         adm.type = input$admtype1Comp,
-        constantVolume = input$constantVolume1Comp
+        constantVolume = input$constantVolume1Comp,
+        debit_central_cartridge = input$debit_central_cartridge1Comp
       )
     )
   })

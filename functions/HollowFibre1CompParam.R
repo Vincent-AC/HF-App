@@ -11,20 +11,21 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                   VinjectInf =  10,
                                   dosingIntervalHoursInf = 12,
                                   numberOfDosesInf = 2,
-                                  adm.type="Bolus")
+                                  adm.type="Bolus",
+                                  debit_central_cartridge=120)
 {
-  library(plyr)      
+  library(plyr)
   library(dplyr)
         halfLifeMin <-   halfLifeHours * 60
         lastTimePointMin <- lastTimePointHours * 60
-        
+
         clearance <-
                 log(2) * (Vcentral + Vcartridge) / halfLifeMin #ml/min
-        
+
         debit_pompe_central_waste <- clearance #ml/min
         debit_pompe_dil_central <- clearance #ml/min
-        
-        
+
+
         volume_waste_produced <-
                 debit_pompe_central_waste * lastTimePointMin #mL
         volume_diluant_to_central <-
@@ -35,17 +36,17 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                 # IV bolus
                 dose_bolus <-
                         initial_concentration * (Vcentral + Vcartridge)
-                
+
                 conc_bolus <- dose_bolus / VinjectBolus
                 total_injected_volume <- VinjectBolus * numberOfDosesBolus
-                
-                
+
+
                 #Create a table that summarizes everything
                 Parameters <- tibble(
                   Group = c(rep("Drug",4),
                             rep("Volume",4),
                             rep("Bolus",4),
-                            rep("Experiment",3)),
+                            rep("Experiment",4)),
                         Parameter = c(
                                 "Drug name",
                                 "Cmax central after 1 dose (µg/mL)",
@@ -61,7 +62,8 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "Total injected volume (mL)",
                                 "Duration of experiment (h)",
                                 "Flow pump diluant to central (mL/min)",
-                                "Flow pump central to waste (mL/min)"
+                                "Flow pump central to waste (mL/min)",
+                                "Flow pump central to cartridge (mL/min)"
                         ),
                         Value = c(drugName,
                                   round(
@@ -79,7 +81,8 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                                   total_injected_volume,
                                                   lastTimePointHours,
                                                   debit_pompe_dil_central,
-                                                  debit_pompe_central_waste
+                                                  debit_pompe_central_waste,
+                                                  debit_central_cartridge
                                           ),
                                           3
                                   )),
@@ -98,10 +101,11 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "total_injected_volume",
                                 "lastTimePointHours",
                                 "debit_pompe_dil_central",
-                                "debit_pompe_central_waste"
+                                "debit_pompe_central_waste",
+                                "debit_central_cartridge"
                         )
                 )
-                
+
         }
         if (adm.type == "Infusion")
         {
@@ -114,15 +118,15 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                         ) / (1 - exp(-keHours *
                                              tinfuseHours))#µg
                 conc_infuse <- dose_infuse / VinjectInf
-                
+
                 total_infused_volume <- VinjectInf * numberOfDosesInf
-   
+
                 #Create a table that summarizes everything
                 Parameters <- tibble(
                         Group = c(rep("Drug",4),
                                   rep("Volume",4),
                                   rep("Infusion",4),
-                                  rep("Experiment",4)),
+                                  rep("Experiment",5)),
                         Parameter = c(
                                 "Drug Name",
                                 "Cmax central after 1 dose (µg/mL)",
@@ -139,6 +143,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "Duration of experiment (h)",
                                 "Flow pump diluant to central (mL/min)",
                                 "Flow pump central to waste (mL/min)",
+                                "Flow pump central to cartridge (mL/min)",
                                 "Flow infusion pump (mL/min)"
                         ),
                         Value = c(drugName,
@@ -158,6 +163,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                                   lastTimePointHours,
                                                   debit_pompe_dil_central,
                                                   debit_pompe_central_waste,
+                                                  debit_central_cartridge,
                                                   debit_infuse
                                           ),
                                           3
@@ -178,10 +184,11 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "lastTimePointHours",
                                 "debit_pompe_dil_central",
                                 "debit_pompe_central_waste",
+                                "debit_central_cartridge",
                                 "debit_infuse"
                         )
                 )
-                
+
         }
         return(Parameters)
 }

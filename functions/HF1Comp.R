@@ -13,7 +13,8 @@ HF1Comp <- function(model,
                     dosingIntervalHoursInf = NA,
                     numberOfDosesInf = NA,
                     adm.type,
-                    constantVolume = T)
+                    constantVolume = T,
+                    debit_central_cartridge = 120)
 {
   Parameters <- HollowFibre1CompParam(
     halfLifeHours,
@@ -29,7 +30,8 @@ HF1Comp <- function(model,
     VinjectInf,
     dosingIntervalHoursInf,
     numberOfDosesInf,
-    adm.type
+    adm.type,
+    debit_central_cartridge
   )
 
   SimData <- HollowFibre1CompSimData(
@@ -48,7 +50,8 @@ HF1Comp <- function(model,
     dosingIntervalHoursInf,
     numberOfDosesInf,
     adm.type,
-    constantVolume
+    constantVolume,
+    debit_central_cartridge
   )
 
   Plot <- HollowFibre1CompPlot(
