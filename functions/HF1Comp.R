@@ -52,7 +52,7 @@ HF1Comp <- function(model,
     numberOfDosesInf,
     adm.type,
     constantVolume,
-    debit_central_cartridge
+    debit_central_cartridge,
     Css
   )
 
