@@ -12,12 +12,16 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                   dosingIntervalHoursInf = 12,
                                   numberOfDosesInf = 2,
                                   adm.type="Bolus",
-                                  debit_central_cartridge=120)
+                                  debit_central_cartridge=120,
+                                  Css = 1,
+                                  Cinfusemaintenance = 1000,
+                                  VinjectLoadingDose = 10)
 {
   library(plyr)
   library(dplyr)
         halfLifeMin <-   halfLifeHours * 60
         lastTimePointMin <- lastTimePointHours * 60
+        keMin <- log(2) / halfLifeMin
 
         clearance <-
                 log(2) * (Vcentral + Vcartridge) / halfLifeMin #ml/min
@@ -188,6 +192,79 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "debit_infuse"
                         )
                 )
+
+        }
+        if (adm.type == "Loading dose + Infusion")
+        {
+          tinfuseMin <- tinfuseHours * 60
+          keHours <- log(2) / halfLifeHours
+          rate_infuse <- keMin * Css * (Vcentral + Vcartridge)
+          debit_infuse <- rate_infuse/Cinfusemaintenance
+          total_infused_volume <- debit_infuse*lastTimePointMin
+          dose_loading <- Css * (Vcentral + Vcartridge)
+          CLoadingDose <- dose_loading/VinjectLoadingDose
+
+          #Create a table that summarizes everything
+          Parameters <- tibble(
+            Group = c(rep("Drug",3),
+                      rep("Volume",4),
+                      rep("Loading dose and infusion",4),
+                      rep("Experiment",4)),
+            Parameter = c(
+              "Drug Name",
+              "Steady state concentration (µg/mL)",
+              "Half life central (h)",
+              "Central volume (mL)",
+              "Cartridge volume (mL)",
+              "Spent volume diluant to central (mL)",
+              "Waste volume (mL)",
+              "Loading dose concentration (µg/mL)",
+              "Loading dose volume (mL)",
+              "Infusion solution concentration (µg/mL)",
+              "Total infused volume (mL)",
+              "Duration of experiment (h)",
+              "Flow pump diluant to central (mL/min)",
+              "Flow pump central to waste (mL/min)",
+              "Flow infusion pump (mL/min)"
+            ),
+            Value = c(drugName,
+                      round(
+                        c(
+                          Css,
+                          halfLifeHours,
+                          Vcentral,
+                          Vcartridge,
+                          volume_diluant_to_central,
+                          volume_waste_produced,
+                          CLoadingDose,
+                          VinjectLoadingDose,
+                          Cinfusemaintenance,
+                          total_infused_volume,
+                          lastTimePointHours,
+                          debit_pompe_dil_central,
+                          debit_pompe_central_waste,
+                          debit_infuse
+                        ),
+                        3
+                      )),
+            ID =        c(
+              "drugName",
+              "Css",
+              "halfLifeHours",
+              "Vcentral",
+              "Vcartridge",
+              "volume_diluant_to_central",
+              "volume_waste_produced",
+              "CLoadingDose",
+              "VinjectLoadingDose",
+              "Cinfusemaintenance",
+              "total_infused_volume",
+              "lastTimePointHours",
+              "debit_pompe_dil_central",
+              "debit_pompe_central_waste",
+              "debit_infuse"
+            )
+          )
 
         }
         return(Parameters)

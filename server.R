@@ -99,6 +99,13 @@ shinyServer(function(input, output, session) {
                 "Half life of drug (hours)",
                 possibleHalfLifeValues1Comp())
   })
+
+  output$uiCinfusemaintenance1comp <- renderUI({
+    selectInput("Cinfusemaintenance1comp",
+                "Infusion concentration (mg/L)",
+                possibleMaintenanceConcentration1Comp())
+  })
+
   output$uiHalfLifeA2Comp <- renderUI({
     selectInput("halfLifehours_A",
                 "Half life of drug A (hours)",
@@ -120,6 +127,20 @@ shinyServer(function(input, output, session) {
       roundingDigits = 2
     )
   })
+
+  possibleMaintenanceConcentration1Comp <- reactive({
+    calculatePossibleMaintenanceConcentration(
+      input$minPumpFlowInfuse1Comp,
+      input$maxPumpFlowInfuse1Comp,
+      input$stepPumpFlowInfuse1Comp,
+      input$Vcentral1Comp,
+      input$Vcartridge1Comp,
+      input$css1comp,
+      as.numeric(input$halfLifehours1Comp),
+      roundingDigits = 2
+    )
+  })
+
 
   possibleHalfLifeValues2Comp <- reactive({
     calculatePossibleHalfLives(
@@ -156,7 +177,10 @@ shinyServer(function(input, output, session) {
         numberOfDosesInf = input$numberOfDosesInf1Comp,
         adm.type = input$admtype1Comp,
         constantVolume = input$constantVolume1Comp,
-        debit_central_cartridge = input$debit_central_cartridge1Comp
+        debit_central_cartridge = input$debit_central_cartridge1Comp,
+        Css = input$css1comp,
+        Cinfusemaintenance = as.numeric(input$Cinfusemaintenance1comp),
+        VinjectLoadingDose = input$VinjectLoadingDose1Comp
       )
     )
   })
