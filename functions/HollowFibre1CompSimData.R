@@ -15,7 +15,8 @@ HollowFibre1CompSimData  <- function(model,
                                   adm.type,
                                   constantVolume = T,
                                   debit_central_cartridge,
-                                  Css = NA)
+                                  Css = NA,
+                                  Cinfusemaintenance=NA)
 {
   library(mrgsolve)
   library(dplyr)
@@ -119,9 +120,7 @@ HollowFibre1CompSimData  <- function(model,
 
   if (adm.type == "Loading dose + Infusion")
   {
-    tinfuseMin <- tinfuseHours * 60
     halfLifeMin <-   halfLifeHours * 60
-    dosingIntervalMinInf <- dosingIntervalHoursInf * 60
     keHours <- log(2) / halfLifeHours
     keMin <- log(2) / halfLifeMin
     # IV Loading dose
@@ -130,10 +129,10 @@ HollowFibre1CompSimData  <- function(model,
     rate_infuse <- keMin * Css * (Vcentral + Vcartridge)
 
     #Dose events for each compartments
-    e1_loading <- ev(      amt = dose_loading,
+    e1_loading <- ev(amt = dose_loading,
       cmt = 1,
       ii = NA,
-      addl = NA    )
+      addl = NA)
     e1_infusion <-
       ev(
         amt = rate_infuse*lastTimePointMin,
@@ -143,13 +142,12 @@ HollowFibre1CompSimData  <- function(model,
     dose <- e1_loading + e1_infusion
     if (constantVolume == FALSE)
     {
+
       Vadd_infusion <-
         ev(
-          amt = VinjectInf,
-          rate = VinjectInf / tinfuseMin,
-          cmt = 2,
-          ii = dosingIntervalMinInf,
-          addl = numberOfDosesInf-1
+          amt = (rate_infuse/Cinfusemaintenance)*lastTimePointMin,
+          rate = rate_infuse/Cinfusemaintenance,
+          cmt = 3
         ) %>% realize_addl()
       dose <- e1_loading + e1_infusion + Vadd_infusion
 

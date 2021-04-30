@@ -324,21 +324,21 @@ HollowFibre1CompDiagram <- function(Parameters,
         x = 550,
         y = 875,
         label = paste0(
-          "Every ",
-          filter(Parameters, ID == "dosingIntervalHours") %>% select(Value),
-          " h"
+          "Loading dose ",
+          filter(Parameters, ID == "CLoadingDose") %>% select(Value),
+          "µg/mL"
         )
       ), color = "black") + # time between doses infusion
       geom_text(size=4,mapping=aes(
         x = 550,
         y = 925,
-        label = paste0(filter(Parameters, ID == "Vinject") %>% select(Value), " mL")
+        label = paste0(filter(Parameters, ID == "VinjectLoadingDose") %>% select(Value), " mL")
       ), color = "#0ed145") + #volume infusion
       geom_text(size=4,mapping=aes(
         x = 550,
         y = 975,
         label = paste0(
-          filter(Parameters, ID == "conc_infuse") %>% select(Value),
+          filter(Parameters, ID == "Cinfusemaintenance") %>% select(Value),
           " µg/mL"
         )
       ), color = "blue") + #concentration infusion

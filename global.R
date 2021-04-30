@@ -1,3 +1,4 @@
+source("functions/calculatePossibleMaintenanceConcentration.R",encoding="UTF-8",local=T)
 source("functions/calculatePossibleHalfLives.R",encoding="UTF-8",local=T)
 source("functions/HF1Comp.R",encoding="UTF-8",local=T)
 source("functions/HF2Comp.R",encoding="UTF-8",local=T)

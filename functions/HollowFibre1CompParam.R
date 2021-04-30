@@ -12,12 +12,16 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                   dosingIntervalHoursInf = 12,
                                   numberOfDosesInf = 2,
                                   adm.type="Bolus",
-                                  debit_central_cartridge=120)
+                                  debit_central_cartridge=120,
+                                  Css = 1,
+                                  Cinfusemaintenance = 1000,
+                                  VinjectLoadingDose = 10)
 {
   library(plyr)
   library(dplyr)
         halfLifeMin <-   halfLifeHours * 60
         lastTimePointMin <- lastTimePointHours * 60
+        keMin <- log(2) / halfLifeMin
 
         clearance <-
                 log(2) * (Vcentral + Vcartridge) / halfLifeMin #ml/min
@@ -193,35 +197,30 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
         if (adm.type == "Loading dose + Infusion")
         {
           tinfuseMin <- tinfuseHours * 60
-          debit_infuse <- VinjectInf / tinfuseMin
           keHours <- log(2) / halfLifeHours
-          dose_infuse <-
-            (
-              initial_concentration * (Vcentral + Vcartridge) * keHours * tinfuseHours
-            ) / (1 - exp(-keHours *
-                           tinfuseHours))#µg
-          conc_infuse <- dose_infuse / VinjectInf
-
-          total_infused_volume <- VinjectInf * numberOfDosesInf
+          rate_infuse <- keMin * Css * (Vcentral + Vcartridge)
+          debit_infuse <- rate_infuse/Cinfusemaintenance
+          total_infused_volume <- debit_infuse*lastTimePointMin
+          dose_loading <- Css * (Vcentral + Vcartridge)
+          CLoadingDose <- dose_loading/VinjectLoadingDose
 
           #Create a table that summarizes everything
           Parameters <- tibble(
-            Group = c(rep("Drug",4),
+            Group = c(rep("Drug",3),
                       rep("Volume",4),
-                      rep("Infusion",4),
+                      rep("Loading dose and infusion",4),
                       rep("Experiment",4)),
             Parameter = c(
               "Drug Name",
-              "Cmax central after 1 dose (µg/mL)",
-              "Infusion solution concentration (µg/mL)",
+              "Steady state concentration (µg/mL)",
               "Half life central (h)",
               "Central volume (mL)",
               "Cartridge volume (mL)",
               "Spent volume diluant to central (mL)",
               "Waste volume (mL)",
-              "Infusion volume for 1 dose (mL)",
-              "Total number of doses",
-              "Dosing interval (h)",
+              "Loading dose concentration (µg/mL)",
+              "Loading dose volume (mL)",
+              "Infusion solution concentration (µg/mL)",
               "Total infused volume (mL)",
               "Duration of experiment (h)",
               "Flow pump diluant to central (mL/min)",
@@ -231,16 +230,15 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
             Value = c(drugName,
                       round(
                         c(
-                          initial_concentration,
-                          conc_infuse,
+                          Css,
                           halfLifeHours,
                           Vcentral,
                           Vcartridge,
                           volume_diluant_to_central,
                           volume_waste_produced,
-                          VinjectInf,
-                          numberOfDosesInf,
-                          dosingIntervalHoursInf,
+                          CLoadingDose,
+                          VinjectLoadingDose,
+                          Cinfusemaintenance,
                           total_infused_volume,
                           lastTimePointHours,
                           debit_pompe_dil_central,
@@ -251,16 +249,15 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                       )),
             ID =        c(
               "drugName",
-              "initial_concentration",
-              "conc_infuse",
+              "Css",
               "halfLifeHours",
               "Vcentral",
               "Vcartridge",
               "volume_diluant_to_central",
               "volume_waste_produced",
-              "Vinject",
-              "numberOfDoses",
-              "dosingIntervalHours",
+              "CLoadingDose",
+              "VinjectLoadingDose",
+              "Cinfusemaintenance",
               "total_infused_volume",
               "lastTimePointHours",
               "debit_pompe_dil_central",
