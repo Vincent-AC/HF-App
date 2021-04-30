@@ -284,12 +284,18 @@ HollowFibre1CompDiagram <- function(Parameters,
           " mL"
         )
       ), color = "#0ed145") + # volume diluent
-      geom_text(size=4,mapping=aes(
-        x = 1275,
-        y = 375,
-        label = "50 to 120 mL/min"
-
-      ), color = "#ff7f27") + # flow cartridge pump
+      geom_text(
+        size = 4,
+        mapping = aes(
+          x = 1275,
+          y = 375,
+          label = paste0(
+            filter(Parameters, ID == "debit_central_cartridge") %>% select(Value),
+            " mL/min"
+          )
+        ),
+        color = "#ff7f27"
+      ) + # flow cartridge pump
       geom_text(size=4,mapping=aes(
         x = 1275,
         y = 575,

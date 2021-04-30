@@ -209,7 +209,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
             Group = c(rep("Drug",3),
                       rep("Volume",4),
                       rep("Loading dose and infusion",4),
-                      rep("Experiment",4)),
+                      rep("Experiment",5)),
             Parameter = c(
               "Drug Name",
               "Steady state concentration (µg/mL)",
@@ -225,6 +225,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
               "Duration of experiment (h)",
               "Flow pump diluant to central (mL/min)",
               "Flow pump central to waste (mL/min)",
+              "Flow pump central to cartridge (mL/min)",
               "Flow infusion pump (mL/min)"
             ),
             Value = c(drugName,
@@ -243,6 +244,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                           lastTimePointHours,
                           debit_pompe_dil_central,
                           debit_pompe_central_waste,
+                          debit_central_cartridge,
                           debit_infuse
                         ),
                         3
@@ -262,6 +264,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
               "lastTimePointHours",
               "debit_pompe_dil_central",
               "debit_pompe_central_waste",
+              "debit_central_cartridge",
               "debit_infuse"
             )
           )
