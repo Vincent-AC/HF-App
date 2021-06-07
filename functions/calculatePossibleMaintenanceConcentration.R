@@ -9,9 +9,8 @@ calculatePossibleMaintenanceConcentration <- function(minPumpFlow=0.4,
 {
   possiblePumpFlow <- seq(minPumpFlow,maxPumpFlow,stepPumpFlow)
 
-  halfLifeMin <-   halfLifeHours * 60
-  keMin <- log(2) / halfLifeMin
-  rate_infuse <- keMin * Css * (Vcentral + Vcartridge)
+  keHours <- log(2) / halfLifeHours
+  rate_infuse <- keHours * Css * (Vcentral + Vcartridge)
 
   possibleMaintenanceConcentration <- rate_infuse/possiblePumpFlow
 

@@ -114,7 +114,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
         if (adm.type == "Infusion")
         {
                 tinfuseMin <- tinfuseHours * 60
-                debit_infuse <- VinjectInf / tinfuseMin
+                debit_infuse <- VinjectInf / tinfuseHours
                 keHours <- log(2) / halfLifeHours
                 dose_infuse <-
                         (
@@ -198,7 +198,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
         {
           tinfuseMin <- tinfuseHours * 60
           keHours <- log(2) / halfLifeHours
-          rate_infuse <- keMin * Css * (Vcentral + Vcartridge)
+          rate_infuse <- keHours * Css * (Vcentral + Vcartridge)
           debit_infuse <- rate_infuse/Cinfusemaintenance
           total_infused_volume <- debit_infuse*lastTimePointMin
           dose_loading <- Css * (Vcentral + Vcartridge)

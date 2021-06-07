@@ -160,6 +160,13 @@ tab1Comp <-  fluidPage(tabsetPanel(
         conditionalPanel(
           condition = "input.admtype1Comp== 'Loading dose + Infusion'",
           numericInput(
+            "css1comp",
+            "Steady state concentration (mg/L)",
+            1,
+            min = 0,
+            step = 0.01
+          ),
+          numericInput(
             "VinjectLoadingDose1Comp",
             "Loading dose volume (mL)",
             10,
@@ -168,47 +175,26 @@ tab1Comp <-  fluidPage(tabsetPanel(
           ),
             numericInput(
               "minPumpFlowInfuse1Comp",
-              "Minimum Infusion Flow (mL/min)",
-              0.4,
+              "Minimum Infusion Flow (mL/h)",
+              0.1,
               min = 0,
               step = 0.1
             ),
             numericInput(
               "maxPumpFlowInfuse1Comp",
-              "Maximum Infusion Flow (mL/min)",
-              24.3,
+              "Maximum Infusion Flow (mL/h)",
+              400,
               min = 0,
               step = 0.1
             ),
             numericInput(
               "stepPumpFlowInfuse1Comp",
-              "Step of Infusion (mL/min)",
+              "Step of Infusion (mL/h)",
               0.1,
               min = 0,
               step = 0.1
             ),
-          htmlOutput("uiCinfusemaintenance1comp"),
-          numericInput(
-            "css1comp",
-            "Steady state concentration (mg/L)",
-            1,
-            min = 0,
-            step = 0.01
-          ),
-          numericInput(
-            "dosingIntervalHoursInf1Comp",
-            "Dosing interval (hours)",
-            12,
-            min = 0,
-            step = 0.01
-          ),
-          numericInput(
-            "numberOfDosesInf1Comp",
-            "Total number of doses",
-            2,
-            min = 1,
-            step = 1
-          )
+          htmlOutput("uiCinfusemaintenance1comp")
         )
       )
     ),

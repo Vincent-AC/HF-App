@@ -228,7 +228,7 @@ HollowFibre1CompDiagram <- function(Parameters,
         y = 1025,
         label = paste0(
           filter(Parameters, ID == "debit_infuse") %>% select(Value),
-          " mL/min"
+          " mL/h"
         )
       ), color = "#ff7f27") + #flow infusion
       theme(
@@ -353,7 +353,7 @@ HollowFibre1CompDiagram <- function(Parameters,
         y = 1025,
         label = paste0(
           filter(Parameters, ID == "debit_infuse") %>% select(Value),
-          " mL/min"
+          " mL/h"
         )
       ), color = "#ff7f27") + #flow infusion
       theme(
