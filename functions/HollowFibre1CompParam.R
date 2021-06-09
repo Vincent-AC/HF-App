@@ -148,7 +148,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
                                 "Flow pump diluant to central (mL/min)",
                                 "Flow pump central to waste (mL/min)",
                                 "Flow pump central to cartridge (mL/min)",
-                                "Flow infusion pump (mL/min)"
+                                "Flow infusion pump (mL/h)"
                         ),
                         Value = c(drugName,
                                   round(
@@ -226,7 +226,7 @@ HollowFibre1CompParam <- function(halfLifeHours=7.22,
               "Flow pump diluant to central (mL/min)",
               "Flow pump central to waste (mL/min)",
               "Flow pump central to cartridge (mL/min)",
-              "Flow infusion pump (mL/min)"
+              "Flow infusion pump (mL/h)"
             ),
             Value = c(drugName,
                       round(
