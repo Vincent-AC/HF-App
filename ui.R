@@ -14,7 +14,13 @@ source("functions/uiTab1Comp.R")
 source("functions/uiTab2Comp.R")
 dashboardPage(
         title = "HF-App",
-        dashboardHeader(title = "HF-App"),
+        dashboardHeader(title = "HF-App",
+                        tags$li(a(onclick = "onclick =window.open('https://github.com/Vincent-AC/HF-App')",
+                                  href = NULL,
+                                  icon("github"),
+                                  title = "GitHub",
+                                  style = "cursor: pointer;"),
+                                class = "dropdown")),
         dashboardSidebar(sidebarMenu(
                 menuItem("1 compartment Hollow Fibre",
                          tabName = "1comp"),
