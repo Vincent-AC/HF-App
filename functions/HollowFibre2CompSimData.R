@@ -25,7 +25,8 @@ HollowFibre2CompSimData  <- function(model,
                                   dosingIntervalHours_BInf = NA,
                                   numberOfDosesAInf = NA,
                                   numberOfDosesBInf = NA,
-                                  constantVolume = T)
+                                  constantVolume = T,
+                                  debit_central_cartridge)
 {
         library(mrgsolve)
         library(dplyr)
@@ -51,7 +52,9 @@ HollowFibre2CompSimData  <- function(model,
                         Q1 = debit_pompe_extra_central   ,
                         V1 = Vextra ,
                         Q2 = debit_pompe_central_waste ,
-                        V2 = Vcentral + Vcartridge
+                        V2 = Vcentral,
+                        Q3 = debit_central_cartridge,
+                        V3 = Vcartridge
                 )
 
 
@@ -78,14 +81,14 @@ HollowFibre2CompSimData  <- function(model,
                 e2_bolus <-
                         ev(
                                 amt = doseB_bolus_extra,
-                                cmt = 2,
+                                cmt = 3,
                                 ii = dosingIntervalMin_BBolus,
                                 addl = numberOfDosesBBolus - 1
                         )
                 e3_bolus <-
                         ev(
                                 amt = doseB_bolus_central,
-                                cmt = 3,
+                                cmt = 4,
                                 ii = dosingIntervalMin_BBolus,
                                 addl = numberOfDosesBBolus - 1
                         )
@@ -96,21 +99,21 @@ HollowFibre2CompSimData  <- function(model,
                         Vadd_bolus_central_A <-
                                 ev(
                                         amt = Vinject_ABolus,
-                                        cmt = 4,
+                                        cmt = 6,
                                         ii = dosingIntervalMin_ABolus,
                                         addl = numberOfDosesABolus - 1
                                 )
                         Vadd_bolus_central_B <-
                                 ev(
                                         amt = Vinject_B_centralBolus,
-                                        cmt = 5,
+                                        cmt = 7,
                                         ii = dosingIntervalMin_BBolus,
                                         addl = numberOfDosesBBolus - 1
                                 )
                         Vadd_bolus_extra_B <-
                                 ev(
                                         amt = Vinject_B_extraBolus,
-                                        cmt = 6,
+                                        cmt = 8,
                                         ii = dosingIntervalMin_BBolus,
                                         addl = numberOfDosesBBolus - 1
                                 )
@@ -169,7 +172,7 @@ HollowFibre2CompSimData  <- function(model,
                         ev(
                                 amt = doseB_infuse_extra,
                                 rate = doseB_infuse_extra / tinfuseMin_B,
-                                cmt = 2,
+                                cmt = 3,
                                 ii = dosingIntervalMin_BInf,
                                 addl = numberOfDosesBInf - 1
                         )
@@ -177,7 +180,7 @@ HollowFibre2CompSimData  <- function(model,
                         ev(
                                 amt = doseB_infuse_central,
                                 rate = doseB_infuse_central / tinfuseMin_B,
-                                cmt = 3,
+                                cmt = 4,
                                 ii = dosingIntervalMin_BInf,
                                 addl = numberOfDosesBInf - 1
                         )
@@ -189,7 +192,7 @@ HollowFibre2CompSimData  <- function(model,
                                 ev(
                                         amt = Vinject_AInf,
                                         rate = Vinject_AInf / tinfuseMin_A,
-                                        cmt = 4,
+                                        cmt = 6,
                                         ii = dosingIntervalMin_AInf,
                                         addl = numberOfDosesAInf - 1
                                 )
@@ -197,7 +200,7 @@ HollowFibre2CompSimData  <- function(model,
                                 ev(
                                         amt = Vinject_B_centralInf,
                                         rate = Vinject_B_central / tinfuseMin_B,
-                                        cmt = 5,
+                                        cmt = 7,
                                         ii = dosingIntervalMin_BInf,
                                         addl = numberOfDosesBInf - 1
                                 )
@@ -205,7 +208,7 @@ HollowFibre2CompSimData  <- function(model,
                                 ev(
                                         amt = Vinject_B_extraInf,
                                         rate = Vinject_B_extra / tinfuseMin_B,
-                                        cmt = 6,
+                                        cmt = 8,
                                         ii = dosingIntervalMin_BInf,
                                         addl = numberOfDosesBInf - 1
                                 )

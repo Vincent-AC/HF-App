@@ -47,6 +47,13 @@ tab2Comp <-
         step = 0.01
       ),
       numericInput(
+        "debit_central_cartridge2Comp",
+        "Flow rate central to cartridge (mL/min)",
+        120,
+        min = 0,
+        step = 0.01
+      ),
+      numericInput(
         "Vcartridge2Comp",
         "Cartridge volume (mL)",
         50,

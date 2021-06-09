@@ -330,7 +330,8 @@ shinyServer(function(input, output, session) {
         dosingIntervalHours_BInf = input$dosingIntervalHours_BInf,
         numberOfDosesAInf = input$numberOfDosesAInf,
         numberOfDosesBInf = input$numberOfDosesBInf,
-        constantVolume = input$constantVolume2Comp
+        constantVolume = input$constantVolume2Comp,
+        debit_central_cartridge = input$debit_central_cartridge2Comp
       )
     )
   })
