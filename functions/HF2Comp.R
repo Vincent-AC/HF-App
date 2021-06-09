@@ -25,7 +25,8 @@ HF2Comp <- function(model,
                     dosingIntervalHours_BInf,
                     numberOfDosesAInf,
                     numberOfDosesBInf,
-                    constantVolume = T)
+                    constantVolume = T,
+                    debit_central_cartridge = 120)
 {
   Parameters <- HollowFibre2CompParam(
     halfLifeHours_A,
@@ -84,7 +85,8 @@ HF2Comp <- function(model,
     dosingIntervalHours_BInf,
     numberOfDosesAInf,
     numberOfDosesBInf,
-    constantVolume = T
+    constantVolume = T,
+    debit_central_cartridge
   )
 
   Plot <- HollowFibre2CompPlot(SimData,

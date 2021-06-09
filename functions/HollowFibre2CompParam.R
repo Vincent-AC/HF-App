@@ -23,7 +23,8 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
                                    dosingIntervalHours_AInf = NA,
                                    dosingIntervalHours_BInf = NA,
                                    numberOfDosesAInf = NA,
-                                   numberOfDosesBInf = NA)
+                                   numberOfDosesBInf = NA,
+                                   debit_central_cartridge = 120)
 {
   library(plyr)
   library(dplyr)
@@ -73,7 +74,7 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
     Group = c(rep("Drugs",9),
               rep("Volume",6),
               rep("Bolus",10),
-              rep("Experiment",5)),
+              rep("Experiment",6)),
     Parameter = c(
       "Drug A name",
       "Drug B name",
@@ -104,7 +105,8 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
       "Flow pump diluant extra to extra (mL/min)",
       "Flow pump extra to central (mL/min)",
       "Flow pump diluant central to central (mL/min)",
-      "Flow pump central to waste (mL/min)"
+      "Flow pump central to waste (mL/min)",
+      "Flow pump central to cartidge (mL/min)"
     ),
     Value = c(drugNameA,
               drugNameB,
@@ -137,7 +139,8 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
                   debit_pompe_dil_extra,
                   debit_pompe_extra_central,
                   debit_pompe_dil_central,
-                  debit_pompe_central_waste
+                  debit_pompe_central_waste,
+                  debit_central_cartridge
                 ),
                 3
               )),
@@ -171,7 +174,8 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
       "debit_pompe_dil_extra",
       "debit_pompe_extra_central",
       "debit_pompe_dil_central",
-      "debit_pompe_central_waste"
+      "debit_pompe_central_waste",
+      "debit_central_cartridge"
     )
   )}
   if(adm.type=="Infusion")
@@ -212,7 +216,7 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
             Group = c(rep("Drugs",9),
                       rep("Volume",6),
                       rep("Infusion",10),
-                      rep("Experiment",8)),
+                      rep("Experiment",9)),
                   Parameter = c(
                           "Drug A name",
                           "Drug B name",
@@ -244,6 +248,7 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
                           "Flow pump extra to central (mL/min)",
                           "Flow pump diluant central to central (mL/min)",
                           "Flow pump central to waste (mL/min)",
+                          "Flow pump central to cartridge (mL/min)",
                           "Flow infusion A to central (mL/min)",
                           "Flow infusion B to central (mL/min)",
                           "Flow infusion B to extra (mL/min)"
@@ -280,6 +285,7 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
                                             debit_pompe_extra_central,
                                             debit_pompe_dil_central,
                                             debit_pompe_central_waste,
+                                            debit_central_cartridge,
                                             debit_infuse_A,
                                             debit_infuse_B_central,
                                             debit_infuse_B_extra
@@ -317,6 +323,7 @@ HollowFibre2CompParam <- function (halfLifeHours_A = 10,
                           "debit_pompe_extra_central",
                           "debit_pompe_dil_central",
                           "debit_pompe_central_waste",
+                          "debit_central_cartridge",
                           "debit_infuse_A",
                           "debit_infuse_B_central",
                           "debit_infuse_B_extra"
