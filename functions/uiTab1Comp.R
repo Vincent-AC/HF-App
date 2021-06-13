@@ -20,7 +20,7 @@ tab1Comp <-  fluidPage(tabsetPanel(
         numericInput(
           "maxPumpFlow1Comp",
           "Maximum Pump Flow (mL/min)",
-          24.3,
+          150,
           min = 0,
           step = 0.1
         ),

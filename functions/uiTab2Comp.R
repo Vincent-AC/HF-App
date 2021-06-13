@@ -21,7 +21,7 @@ tab2Comp <-
       numericInput(
         "maxPumpFlow2Comp",
         "Maximum Pump Flow (mL/min)",
-        24.3,
+        150,
         min = 0,
         step = 0.1
       ),
