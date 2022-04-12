@@ -33,20 +33,29 @@ shinyServer(function(input, output, session) {
     values$data2comp <- read.csv(file, na.strings = c("NA", "."))
   })
 
-  output$ycol <- renderUI({
-    df <- values$maindata
-    validate(need(!is.null(df), "Please select a data set"))
-    items = names(df)
-    names(items) = items
-    selectInput("y", "y variable:", items, selected = items[1])
-  })
-
   output$xcol <- renderUI({
     df <- values$maindata
     validate(need(!is.null(df), "Please select a data set"))
     items = names(df)
     names(items) = items
-    selectInput("x", "x variable:", items, selected = items[2])
+    selectInput("x", "x variable:", items, selected = items[1])
+
+  })
+
+  output$ycol <- renderUI({
+    df <- values$maindata
+    validate(need(!is.null(df), "Please select a data set"))
+    items = names(df)
+    names(items) = items
+    selectInput("y", "y variable:", items, selected = items[2])
+  })
+
+  output$xcol2comp <- renderUI({
+    df <- values$data2comp
+    validate(need(!is.null(df), "Please select a data set"))
+    items = names(df)
+    names(items) = items
+    selectInput("x2comp", "x variable:", items, selected = items[1])
 
   })
 
@@ -55,16 +64,7 @@ shinyServer(function(input, output, session) {
     validate(need(!is.null(df), "Please select a data set"))
     items = names(df)
     names(items) = items
-    selectInput("y2comp", "y variable:", items, selected = items[1])
-  })
-
-  output$xcol2comp <- renderUI({
-    df <- values$data2comp
-    validate(need(!is.null(df), "Please select a data set"))
-    items = names(df)
-    names(items) = items
-    selectInput("x2comp", "x variable:", items, selected = items[2])
-
+    selectInput("y2comp", "y variable:", items, selected = items[2])
   })
 
   output$groupcol2comp <- renderUI({

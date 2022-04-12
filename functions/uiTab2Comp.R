@@ -268,8 +268,8 @@ fluidRow(
     ),
     fileInput("datafile2comp", "Add data to graph (.csv)",
               multiple = FALSE, accept = c("csv")),
-    uiOutput("ycol2comp"),
     uiOutput("xcol2comp"),
+    uiOutput("ycol2comp"),
     uiOutput("groupcol2comp"),
     uiOutput("DrugAvalue"),
     uiOutput("DrugBvalue")

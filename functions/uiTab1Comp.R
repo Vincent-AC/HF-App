@@ -240,8 +240,8 @@ tab1Comp <-  fluidPage(tabsetPanel(
              ),
              fileInput("datafile", "Add data to graph (.csv)",
                        multiple = FALSE, accept = c("csv")),
-             uiOutput("ycol"),
-             uiOutput("xcol")
+             uiOutput("xcol"),
+             uiOutput("ycol")
            )),
   tabPanel("Simulation data",
            fluidRow(
