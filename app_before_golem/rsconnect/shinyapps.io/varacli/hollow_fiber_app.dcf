@@ -1,0 +1,13 @@
+name: hollow_fiber_app
+title: hollow_fiber_app
+username:
+account: varacli
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3614392
+bundleId: 5790693
+url: https://varacli.shinyapps.io/hollow_fiber_app/
+when: 1649775219.88992
+lastSyncTime: 1649775219.88992
+asMultiple: FALSE
+asStatic: FALSE
