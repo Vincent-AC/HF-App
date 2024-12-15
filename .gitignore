@@ -2,4 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
-/app_before_golem
+app_before_golem/
+rsconnect/
