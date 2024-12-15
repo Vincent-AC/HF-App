@@ -6,6 +6,7 @@
 #' @noRd
 app_server <- function(input, output, session) {
   mod_hollow_fiber_1comp_server("hf_1comp")
+  mod_hollow_fiber_1comp_abs_server("hf_1comp_abs")
   mod_hollow_fiber_2comp_server("hf_2comp")
 
 

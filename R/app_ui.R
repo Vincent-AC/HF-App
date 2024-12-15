@@ -26,8 +26,10 @@ app_ui <- function(request) {
         shinydashboard::sidebarMenu(
           shinydashboard::menuItem("Start here !",
                                    tabName = "home"),
-          shinydashboard::menuItem("1 compartment Hollow Fibre",
+          shinydashboard::menuItem("1 compartment Hollow Fibre IV",
                                    tabName = "1comp"),
+          shinydashboard::menuItem("1 compartment Hollow Fibre first order absorption",
+                                   tabName = "1compAbs"),
           shinydashboard::menuItem("2 compartment Hollow Fibre",
                                    tabName = "2comp")
         )
@@ -37,6 +39,8 @@ app_ui <- function(request) {
                                 mod_welcome_page_ui("welcome_page")),
         shinydashboard::tabItem(tabName = "1comp",
                                 mod_hollow_fiber_1comp_ui("hf_1comp")),
+        shinydashboard::tabItem(tabName = "1compAbs",
+                                mod_hollow_fiber_1comp_abs_ui("hf_1comp_abs")),
         shinydashboard::tabItem(tabName = "2comp",
                                 mod_hollow_fiber_2comp_ui("hf_2comp"))
       ))
