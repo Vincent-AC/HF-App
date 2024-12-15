@@ -30,13 +30,13 @@ mod_hollow_fiber_1comp_abs_ui <- function(id) {
           )
         ),
         fluidRow(
-          mod_parameter_table_1comp_ui(ns("parameter_table_1comp_abs")),
-          mod_experiment_diagram_1comp_ui(ns("experiment_diagram_1comp_abs"))
+          mod_parameter_table_1comp_abs_ui(ns("parameter_table_1comp_abs")),
+          mod_experiment_diagram_1comp_abs_ui(ns("experiment_diagram_1comp_abs"))
         )
       ),
       tabPanel(
         "Simulations plotting",
-        mod_graph_concentrations_1comp_ui(ns("graph_concentrations_1comp_abs"))
+        mod_graph_concentrations_1comp_abs_ui(ns("graph_concentrations_1comp_abs"))
       ),
       tabPanel("Simulation data",
                mod_download_simulated_data_ui(ns(
@@ -84,7 +84,7 @@ mod_hollow_fiber_1comp_abs_server <- function(id) {
       mod_input_start_sim_button_server("input_start_sim_button_1comp_abs")
 
     parameterTable <-
-      mod_parameter_table_1comp_server(
+      mod_parameter_table_1comp_abs_server(
         "parameter_table_1comp_abs",
         halfLifeHours,
         Vcentral,
@@ -92,28 +92,25 @@ mod_hollow_fiber_1comp_abs_server <- function(id) {
         initialConcentration,
         lastTimePointHours,
         drugName,
-        VinjectBolus,
-        dosingIntervalHoursBolus,
-        numberOfDosesBolus,
-        tinfuseHours,
-        VinjectInf,
-        dosingIntervalHoursInf,
-        numberOfDosesInf,
-        admType,
         debitCentralCartridge,
-        css,
-        Cinfusemaintenance,
-        VinjectLoadingDose,
+        nDoses,
+        ka,
+        f_avail = bioavailability,
+        nInfusions,
+        dosingIntervalHoursAbs,
+        CinfusionMin,
+        CinfusionMax,
+        CinfusionStep,
         simulateButton
       )
 
     imgFilePath <- resourcePaths()['img']
 
     experimentDiagram <-
-      mod_experiment_diagram_1comp_server(
+      mod_experiment_diagram_1comp_abs_server(
         "experiment_diagram_1comp_abs",
         parameterTable,
-        admType,
+        admType = "Absorb",
         drugName,
         imgFilePath,
         simulateButton
@@ -131,29 +128,27 @@ mod_hollow_fiber_1comp_abs_server <- function(id) {
         initialConcentration,
         lastTimePointHours,
         drugName,
-        VinjectBolus,
-        dosingIntervalHoursBolus,
-        numberOfDosesBolus,
-        tinfuseHours,
-        VinjectInf,
-        dosingIntervalHoursInf,
-        numberOfDosesInf,
-        admType,
         constantVolume,
         debitCentralCartridge,
-        css,
-        Cinfusemaintenance,
+        nDoses,
+        ka,
+        f_avail = bioavailability,
+        nInfusions,
+        dosingIntervalHoursAbs,
+        CinfusionMin,
+        CinfusionMax,
+        CinfusionStep,
         simulateButton
       )
 
 
-    mod_graph_concentrations_1comp_server(
+    mod_graph_concentrations_1comp_abs_server(
       "graph_concentrations_1comp_abs",
       simulatedData,
       lastTimePointHours,
-      dosingIntervalHoursBolus,
-      dosingIntervalHoursInf,
-      admType,
+      dosingIntervalHoursBolus = NA_real_,
+      dosingIntervalHoursAbs,
+      admType = "Infusion",
       drugName,
       simulateButton
     )

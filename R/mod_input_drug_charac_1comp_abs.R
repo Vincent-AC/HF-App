@@ -21,7 +21,7 @@ mod_input_drug_charac_1comp_abs_ui <- function(id) {
                   "Half life of drug (hours)",
                   choices = NULL),
       numericInput(
-        ns("biovailability"),
+        ns("bioavailability"),
         "Absolute bioavailability",
         1
         ,
@@ -91,7 +91,7 @@ mod_input_drug_charac_1comp_abs_server <- function(id,
         initialConcentration = reactive({
           input$initialConcentration
         }),
-        lastTimePointhours = reactive({
+        lastTimePointHours = reactive({
           input$lastTimePointHours
         }),
         halfLifeHours = reactive({
