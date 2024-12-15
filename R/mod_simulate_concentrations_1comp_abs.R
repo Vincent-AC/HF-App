@@ -35,6 +35,7 @@ mod_simulate_concentrations_1comp_abs_server <- function(id,
                                                       CinfusionMin,
                                                       CinfusionMax,
                                                       CinfusionStep,
+                                                      minInfusionVolume,
                                                       simulateButton){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
@@ -59,7 +60,8 @@ mod_simulate_concentrations_1comp_abs_server <- function(id,
                 dosingIntervalHoursAbs = dosingIntervalHoursAbs(),
                 CinfusionMin = CinfusionMin(),
                 CinfusionMax = CinfusionMax(),
-                CinfusionStep = CinfusionStep()
+                CinfusionStep = CinfusionStep(),
+                minInfusionVolume = minInfusionVolume()
               )
             })
     )

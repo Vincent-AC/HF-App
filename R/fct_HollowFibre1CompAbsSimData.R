@@ -14,7 +14,8 @@ HollowFibre1CompAbsSimData  <- function(model,
                                   dosingIntervalHoursAbs = 12,
                                   CinfusionMin = 1,
                                   CinfusionMax = 1000,
-                                  CinfusionStep = 1)
+                                  CinfusionStep = 1,
+                                  minInfusionVolume = 2)
 {
   library(mrgsolve)
   library(dplyr)
@@ -71,11 +72,13 @@ HollowFibre1CompAbsSimData  <- function(model,
                                         s_i_rounded = calc_s_i_rounded(lag(a_i),a_i,t_i_interval_rounded),
                                         v_inf_rounded = calc_v_inf_rounded(s_i_rounded,c,t_i_interval_rounded),
                                         v_inf_decimal_rounded = calc_v_inf_decimal_rounded(v_inf_rounded)) %>%
-      slice(-1) %>%
-      pull(v_inf_decimal_rounded) %>%
-      max()
+      slice(-1)
 
-    tibble(c,max_v_inf_decimal_rounded)
+    max_v_inf_decimal_rounded |>
+      dplyr::mutate(c) |>
+      dplyr::select(c,v_inf_rounded,v_inf_decimal_rounded) |>
+      dplyr::slice(1)
+
   }
 
   calc_ti <- function(i,n,ka,f_dose){
@@ -110,8 +113,9 @@ HollowFibre1CompAbsSimData  <- function(model,
 
     c_list = seq(CinfusionMin,CinfusionMax,CinfusionStep)
 
-    optimal_v_inf_decimal_rounded <- purrr::map_df(c_list,~calc_max_v_inf_decimal_rounded(nInfusions,ka,f_dose,dose,.x)) %>%
-      filter(max_v_inf_decimal_rounded==min(max_v_inf_decimal_rounded))
+    optimal_v_inf_decimal_rounded <- purrr::map_dfr(c_list,~calc_max_v_inf_decimal_rounded(nInfusions,ka,f_dose,dose,.x)) %>%
+      dplyr::filter(v_inf_rounded >= minInfusionVolume) |>
+      dplyr::filter(v_inf_decimal_rounded==min(v_inf_decimal_rounded))
 
     c_optimal <- optimal_v_inf_decimal_rounded %>% pull(c)
 

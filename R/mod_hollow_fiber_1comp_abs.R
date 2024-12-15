@@ -32,6 +32,9 @@ mod_hollow_fiber_1comp_abs_ui <- function(id) {
         fluidRow(
           mod_parameter_table_1comp_abs_ui(ns("parameter_table_1comp_abs")),
           mod_experiment_diagram_1comp_abs_ui(ns("experiment_diagram_1comp_abs"))
+        ),
+        fluidRow(
+          mod_infusion_table_1comp_abs_ui(ns("infusion_table_1comp_abs")),
         )
       ),
       tabPanel(
@@ -77,7 +80,8 @@ mod_hollow_fiber_1comp_abs_server <- function(id) {
       nDoses,
       CinfusionMin,
       CinfusionMax,
-      CinfusionStep
+      CinfusionStep,
+      minInfusionVolume
     ) %<-% mod_input_dosing_charac_1comp_abs_server("input_dosing_charac_1comp_abs")
 
     simulateButton <-
@@ -101,6 +105,29 @@ mod_hollow_fiber_1comp_abs_server <- function(id) {
         CinfusionMin,
         CinfusionMax,
         CinfusionStep,
+        minInfusionVolume,
+        simulateButton
+      )
+
+    infusionTable <-
+      mod_infusion_table_1comp_abs_server(
+        "infusion_table_1comp_abs",
+        halfLifeHours,
+        Vcentral,
+        Vcartridge,
+        initialConcentration,
+        lastTimePointHours,
+        drugName,
+        debitCentralCartridge,
+        nDoses,
+        ka,
+        f_avail = bioavailability,
+        nInfusions,
+        dosingIntervalHoursAbs,
+        CinfusionMin,
+        CinfusionMax,
+        CinfusionStep,
+        minInfusionVolume,
         simulateButton
       )
 
@@ -138,6 +165,7 @@ mod_hollow_fiber_1comp_abs_server <- function(id) {
         CinfusionMin,
         CinfusionMax,
         CinfusionStep,
+        minInfusionVolume,
         simulateButton
       )
 

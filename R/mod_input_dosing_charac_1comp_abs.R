@@ -57,6 +57,13 @@ mod_input_dosing_charac_1comp_abs_ui <- function(id){
         1,
         min = 0,
         step = 0.1
+      ),
+      numericInput(
+        ns("minInfusionVolume"),
+        "Minimal desired volume infused in a subinterval (mL)",
+        2,
+        min = 0,
+        step = 0.1
       )
     )
   )
@@ -92,6 +99,9 @@ mod_input_dosing_charac_1comp_abs_server <- function(id){
       }),
       CinfusionStep = reactive({
         input$CinfusionStep
+      }),
+      minInfusionVolume = reactive({
+        input$minInfusionVolume
       })
     ))
 

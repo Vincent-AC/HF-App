@@ -5,7 +5,7 @@
 #' @return The return value, if any, from executing the function.
 #'
 #' @noRd
-HollowFibre1CompAbsParam <- function(halfLifeHours = 7.22,
+HollowFibre1CompAbsInfusionParam <- function(halfLifeHours = 7.22,
                                      Vcentral = 200,
                                      Vcartridge = 50,
                                      initial_concentration = 2,
@@ -145,67 +145,23 @@ HollowFibre1CompAbsParam <- function(halfLifeHours = 7.22,
   numberOfDoses <- nDoses
   total_infused_volume <- VinjectInf * numberOfDoses
   #Create a table that summarizes everything
-  Parameters <- tibble(
-    Group = c(rep("Drug",4),
-              rep("Volume",4),
-              rep("Infusion",4),
-              rep("Experiment",4)),
-    Parameter = c(
-      "Drug Name",
-      "Cmax central after 1 dose (µg/mL)",
-      "Infusion solution concentration (µg/mL)",
-      "Half life central (h)",
-      "Central volume (mL)",
-      "Cartridge volume (mL)",
-      "Spent volume diluant to central (mL)",
-      "Waste volume (mL)",
-      "Infusion volume for 1 dose (mL)",
-      "Total number of doses",
-      "Dosing interval (h)",
-      "Total infused volume (mL)",
-      "Duration of experiment (h)",
-      "Flow pump diluant to central (mL/min)",
-      "Flow pump central to waste (mL/min)",
-      "Flow pump central to cartridge (mL/min)"
-    ),
-    Value = c(drugName,
-              round(
-                c(
-                  initial_concentration,
-                  conc_infuse,
-                  halfLifeHours,
-                  Vcentral,
-                  Vcartridge,
-                  volume_diluant_to_central,
-                  volume_waste_produced,
-                  VinjectInf,
-                  numberOfDoses,
-                  dosingIntervalHoursAbs,
-                  total_infused_volume,
-                  lastTimePointHours,
-                  debit_pompe_dil_central,
-                  debit_pompe_central_waste,
-                  debit_central_cartridge
-                ),
-                3
-              )),
-    ID =        c(
-      "drugName",
-      "initial_concentration",
-      "conc_infuse",
-      "halfLifeHours",
-      "Vcentral",
-      "Vcartridge",
-      "volume_diluant_to_central",
-      "volume_waste_produced",
-      "Vinject",
-      "numberOfDoses",
-      "dosingIntervalHours",
-      "total_infused_volume",
-      "lastTimePointHours",
-      "debit_pompe_dil_central",
-      "debit_pompe_central_waste",
-      "debit_central_cartridge"
-    )
-  )
+  Parameters <- final_table_optimal |>
+    dplyr::mutate(
+      `Infusion pump flow rate (mL/h)` = round((s_i_rounded / (conc_infuse / 1000)),2),
+      t_end = t_i_rounded,
+      t_start =
+        case_match(t_i_rounded , 0 ~ 0, .default = lag(t_end))
+    ) |>
+    dplyr::rename(
+      `Sub-interval start time (min)` = t_start,
+      `Sub-interval end time (min)` = t_end,
+      `Sub-interval duration (min)` = t_i_interval_rounded
+    ) |>
+    dplyr::select(
+      `Sub-interval start time (min)`,
+      `Sub-interval end time (min)`,
+      `Sub-interval duration (min)`,
+      `Infusion pump flow rate (mL/h)`
+    ) |>
+    dplyr::slice(-1)
 }

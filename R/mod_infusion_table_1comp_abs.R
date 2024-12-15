@@ -7,7 +7,7 @@
 #' @noRd
 #'
 #' @importFrom shiny NS tagList
-mod_parameter_table_1comp_abs_ui <- function(id) {
+mod_infusion_table_1comp_abs_ui <- function(id) {
   ns <- NS(id)
   tagList(
     box(
@@ -15,8 +15,8 @@ mod_parameter_table_1comp_abs_ui <- function(id) {
       status = "primary",
       solidHeader = TRUE,
       collapsible = TRUE,
-      width = 4,
-      div(style = 'overflow-x: scroll', uiOutput(ns(
+      width = 12,
+      div(style = 'overflow-x: scroll', tableOutput(ns(
         "HFParameters1Comp"
       ))),
       downloadButton(ns('downloadTable'), 'Download table')
@@ -27,7 +27,7 @@ mod_parameter_table_1comp_abs_ui <- function(id) {
 #' parameter_table_1_comp Server Functions
 #'
 #' @noRd
-mod_parameter_table_1comp_abs_server <- function(id,
+mod_infusion_table_1comp_abs_server <- function(id,
                                                  halfLifeHours,
                                                  Vcentral,
                                                  Vcartridge,
@@ -52,7 +52,7 @@ mod_parameter_table_1comp_abs_server <- function(id,
 
     observeEvent(simulateButton(), ({
 
-      values$parameterTable <- HollowFibre1CompAbsParam(
+      values$parameterTable <- HollowFibre1CompAbsInfusionParam(
         halfLifeHours = as.numeric(halfLifeHours()),
         Vcentral = Vcentral(),
         Vcartridge = Vcartridge(),
@@ -72,40 +72,21 @@ mod_parameter_table_1comp_abs_server <- function(id,
       )
 
       flexTable <-
-        values$parameterTable[, c("Group", "Parameter", "Value")] %>%
-        flextable::as_grouped_data(x = ., groups = c("Group")) %>%
+        values$parameterTable %>%
         flextable::as_flextable() %>%
-        flextable::compose(
-          i = ~ !is.na(Group),
-          # when Group not NA
-          j = "Parameter",
-          # on column "parameter"
-          # create a paragraph containing a chunk containing value of `var_group`
-          value = flextable::as_paragraph(flextable::as_chunk(Group))
-        ) %>%
-        flextable::bold(
-          j = 1,
-          i = ~ !is.na(Group),
-          bold = TRUE,
-          part = "body"
-        ) %>%
         flextable::bold(part = "header", bold = TRUE) %>%
         flextable::autofit()
 
-      output$HFParameters1Comp <- renderUI({
-        flexTable %>%
-          flextable::htmltools_value()
+      output$HFParameters1Comp <- renderTable({
+        values$parameterTable
        })
 
       output$downloadTable <- downloadHandler(
         filename = function() {
-          "example.docx"
+          "example.csv"
         },
         content = function(file) {
-          ft <- flexTable
-          doc <- officer::read_docx()
-          doc <- flextable::body_add_flextable(doc, value = ft)
-          print(doc, target = file)
+          write.csv(values$parameterTable, file, row.names = FALSE)
         }
       )
     }))

@@ -26,10 +26,11 @@ app_ui <- function(request) {
         shinydashboard::sidebarMenu(
           shinydashboard::menuItem("Start here !",
                                    tabName = "home"),
-          shinydashboard::menuItem("1 compartment Hollow Fibre IV",
-                                   tabName = "1comp"),
-          shinydashboard::menuItem("1 compartment Hollow Fibre first order absorption",
-                                   tabName = "1compAbs"),
+          shinydashboard::menuItem("1 compartment Hollow Fibre",
+                                   shinydashboard::menuSubItem("Intravenous",tabName = "1comp"),
+                                   shinydashboard::menuSubItem("First order absorption",tabName = "1compAbs"),
+                                   startExpanded = TRUE
+          ),
           shinydashboard::menuItem("2 compartment Hollow Fibre",
                                    tabName = "2comp")
         )
