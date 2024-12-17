@@ -25,7 +25,7 @@ mod_input_dosing_charac_1comp_abs_ui <- function(id){
       ),
       numericInput(
         ns("dosingIntervalHoursAbs"),
-        "Dosing interval (hours)",
+        "Time at the end of the last sub-interval (tn in hours)",
         12,
         min = 0,
         step = 0.01
