@@ -83,7 +83,7 @@ mod_hollow_fiber_1comp_server <- function(id) {
       minPumpFlowInfuse,
       maxPumpFlowInfuse,
       stepPumpFlowInfuse,
-      cInfuseMaintenance
+      Cinfusemaintenance
     ) %<-% mod_input_dosing_charac_server("input_dosing_charac_1comp",
                                           Vcentral,
                                           Vcartridge)

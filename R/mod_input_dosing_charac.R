@@ -117,7 +117,7 @@ mod_input_dosing_charac_ui <- function(id){
           min = 0,
           step = 0.1
         ),
-        selectInput(ns("cInfuseMaintenance"),
+        selectInput(ns("Cinfusemaintenance"),
                     "Infusion concentration (mg/L)",
                     choices = NULL),
         ns = ns
@@ -166,7 +166,7 @@ mod_input_dosing_charac_server <- function(id,
       })
     #Update the possible half lives when there is a change in the pump characteristics and/or volumes
     observe({updateSelectInput(session,
-                               "cInfuseMaintenance",
+                               "Cinfusemaintenance",
                                choices = possibleMaintenanceConcentration())})
 
     return(list(
@@ -209,8 +209,8 @@ mod_input_dosing_charac_server <- function(id,
       stepPumpFlowInfuse = reactive({
         input$stepPumpFlowInfuse
       }),
-      cInfuseMaintenance = reactive({
-        as.numeric(input$cInfuseMaintenance)
+      Cinfusemaintenance = reactive({
+        as.numeric(input$Cinfusemaintenance)
       })
     ))
 
