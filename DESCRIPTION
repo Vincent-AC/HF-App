@@ -1,6 +1,6 @@
 Package: HFApp
 Title: Shiny App For Hollow Fiber Experiments
-Version: 2.0.0
+Version: 2.0.1
 Authors@R: c(
     person("Vincent", "Aranzana-Climent", , "vincent.aranzana.climent@univ-poitiers.fr", role = c("aut", "cre")),
     person("Alexia", "Chauzy", , "alexia.chauzy@univ-poitiers.fr", role = "ctb"),
@@ -9,7 +9,7 @@ Authors@R: c(
   )
 Description: This app was built to help planning and conducting in vitro
     hollow fiber experiments.
-License: GPL (>= 3)
+License: French Goverment Open Licence (etalab-2.0)
 URL: https://github.com/Vincent-AC/HF-App
 BugReports: https://github.com/Vincent-AC/HF-App/issues
 Imports: 
