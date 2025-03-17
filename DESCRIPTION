@@ -10,8 +10,8 @@ Authors@R: c(
 Description: This app was built to help planning and conducting in vitro
     hollow fiber experiments.
 License: French Goverment Open Licence (etalab-2.0)
-URL: https://github.com/Vincent-AC/HF-App
-BugReports: https://github.com/Vincent-AC/HF-App/issues
+URL: https://github.com/INSERM-U1070-PHAR2/HF-App
+BugReports: https://github.com/INSERM-U1070-PHAR2/HF-App/issues
 Imports: 
     config (>= 0.3.1),
     dplyr,

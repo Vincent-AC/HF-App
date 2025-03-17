@@ -14,7 +14,7 @@ app_ui <- function(request) {
       shinydashboard::dashboardHeader(title = "HF-App",
                                       tags$li(
                                         a(
-                                          onclick = "onclick =window.open('https://github.com/Vincent-AC/HF-App')",
+                                          onclick = "onclick =window.open('https://github.com/INSERM-U1070-PHAR2/HF-App')",
                                           href = NULL,
                                           icon("github"),
                                           title = "GitHub",
