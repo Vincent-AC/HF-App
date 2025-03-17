@@ -100,8 +100,8 @@ mod_input_dosing_charac_2comp_ui <- function(id){
           step = 0.01
         ),
         numericInput(
-          ns("numberOfDosesInfB"),
-          "Total number of doses of drug B",
+          ns("numberOfDosesInfA"),
+          "Total number of doses of drug A",
           2,
           min = 1,
           step = 1

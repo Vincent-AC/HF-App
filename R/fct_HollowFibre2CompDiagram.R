@@ -95,7 +95,7 @@ HollowFibre2CompDiagram <- function(Parameters,
         mapping = aes(x = 1550,
                       y = 400,
                       label = paste0(
-                        filter(Parameters, ID == "debit_central_cartridge") %>% select(Value),
+                        filter(Parameters, ID == "debitCentralCartridge") %>% select(Value),
                         " mL/min"
                       )),
         color = "#ff7f27"
@@ -394,7 +394,10 @@ HollowFibre2CompDiagram <- function(Parameters,
         size = 3,
         mapping = aes(x = 1550,
                       y = 400,
-                      label = "50 to 120 mL/min"),
+                      label = paste0(
+                        filter(Parameters, ID == "debitCentralCartridge") %>% select(Value),
+                        " mL/min"
+                      )),
         color = "#ff7f27"
       ) + # flow cartridge pump
       geom_text(
@@ -641,7 +644,7 @@ HollowFibre2CompDiagram <- function(Parameters,
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         legend.position = "none",
-        text = element_text(size = 400),
+        text = element_text(family = "sans", size = 28),
         panel.background = element_blank(),
         panel.border = element_blank(),
         panel.grid.major = element_blank(),
