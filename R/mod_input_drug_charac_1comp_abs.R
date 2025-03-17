@@ -48,7 +48,7 @@ mod_input_drug_charac_1comp_abs_ui <- function(id) {
         "Experiment duration (hours)",
         24,
         min = 0,
-        step = 0.01
+        step = 0.25
       )
     )
   )
